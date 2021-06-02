@@ -1,0 +1,31 @@
+*.py[cod]
+__pycache__/
+# C extensions
+*.so
+
+# Packages
+/*.egg
+/*.egg-info
+/build
+develop-eggs
+MANIFEST
+
+# Unit test / coverage reports
+.coverage
+htmlcov
+.cache
+.pytest_cache
+.mypy_cache
+
+# Translations
+*.mo
+
+# npm
+node_modules/
+
+# setuptools
+dist
+
+# Python3 Venv Files
+.venv/
+.python-version

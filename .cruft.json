@@ -1,0 +1,24 @@
+{
+    "template": "https://github.com/ashb/cookiecutter-python",
+    "commit": "0b8a85a561c31c2586c9a6f920e1bafe51ce7080",
+    "context": {
+        "cookiecutter": {
+            "full_name": "Ash Berlin-Taylor",
+            "email": "ash_github@firemirror.com",
+            "github_username": "ashb",
+            "project_name": "freedesktop-icons",
+            "module_name": "freedesktop_icons",
+            "description": "Find icon paths according to the freedesktop icon theme specification.",
+            "version": "1.0.0a1",
+            "docs_tool": "sphinx",
+            "license": "MIT",
+            "min_python_version": "3.9",
+            "install_deps_now": "False",
+            "_extensions": [
+                "jinja2_time.TimeExtension"
+            ],
+            "_template": "https://github.com/ashb/cookiecutter-python"
+        }
+    },
+    "directory": null
+}
