@@ -1,4 +1,4 @@
-.PHONY: help init build test lint pretty precommit_install bump_major bump_minor bump_patch
+.PHONY: help init build test htmlcov lint pretty precommit_install bump_major bump_minor bump_patch
 
 BIN = .venv/bin/
 CODE = "freedesktop_icons"
@@ -8,6 +8,9 @@ help: # Make help to show possible targets
 
 test:  ## Test the project
 	poetry run pytest --verbosity=2 --log-level=DEBUG --cov="$(CODE)" $(args)
+
+htmlcov:  ## Tests the project with html coverage report
+	$(MAKE) test args="--cov-report=html:htmlcov $(args)"
 
 build:  ## Build the sdist/wheel packages
 	poetry build

@@ -8,6 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+attrs = "^21.2.0"
 
 [tool.poetry.dev-dependencies]
 vulture = "^1.0"
@@ -54,8 +55,13 @@ skip = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "--strict-markers"
+addopts = "--strict-markers --doctest-modules"
 
 [tool.coverage.run]
 omit = ["tests/*","**/__main__.py"]
 branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+]

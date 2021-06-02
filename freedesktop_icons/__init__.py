@@ -5,7 +5,7 @@ Find icon paths according to the freedesktop icon theme specification.
 
 
 def __getattr__(name):
-    if name == "__version__":
+    if name == "__version__":  # pragma: no cover
         # Lazy load the version only if someone asks for it
         from importlib import metadata
 

@@ -70,4 +70,5 @@ repos:
         name: bandit
         language: system
         entry: poetry run bandit
+        files: '^freedesktop_icons/'
         types: [python]
