@@ -24,6 +24,7 @@ pytest-cov = "^2.7"
 pytest-deadfixtures = "^2.2.1"
 pep8-naming = "^0.8.2"
 cruft = "^2.2"
+furo = "^2021.6.18-beta.36"
 
 [build-system]
 requires = ["poetry>=0.12"]

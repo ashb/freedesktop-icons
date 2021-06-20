@@ -3,7 +3,6 @@ _________________
 
 [![PyPI version](https://badge.fury.io/py/freedesktop-icons.svg)](http://badge.fury.io/py/freedesktop-icons)
 [![Test Status](https://github.com/ashb/freedesktop-icons/workflows/Test/badge.svg?branch=develop)](https://github.com/ashb/freedesktop-icons/actions?query=workflow%3ATest)
-[![Lint Status](https://github.com/ashb/freedesktop-icons/workflows/Lint/badge.svg?branch=develop)](https://github.com/ashb/freedesktop-icons/actions?query=workflow%3ALint)
 [![codecov](https://codecov.io/gh/ashb/freedesktop-icons/branch/main/graph/badge.svg)](https://codecov.io/gh/ashb/freedesktop-icons)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://pypi.python.org/pypi/freedesktop-icons/)
 [![Downloads](https://pepy.tech/badge/freedesktop-icons)](https://pepy.tech/project/freedesktop-icons)

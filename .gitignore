@@ -29,3 +29,6 @@ dist
 # Python3 Venv Files
 .venv/
 .python-version
+
+
+docs/_build/

@@ -3,15 +3,31 @@ import mmap
 import pathlib
 import struct
 from functools import cache
+from typing import Iterator
 
 import attr
 
 
 @attr.s(auto_attribs=True, hash=False)
 class GtkIconCache:
+    """
+    Read GTK ``icon-theme.cache`` files for quicker icon discovery.
+
+    Icon theme directories often have 10s or 100s of different directories, so searching for an icon in them would involve many ``stat(2)`` syscalls.
+    To avoid this problem GTK has created a cache file that allows reading a single file to find all the folders where a given icon name is present.
+
+    (Updating this cache file is out-of-scope for this module, see ``gtk-update-icon-cache`` from GTK.)
+
+    Args:
+        theme_dir (pathlib.Path): Icon theme directory to look in
+    """
+
     theme_dir: pathlib.Path = attr.ib(converter=pathlib.Path)
+    """Icon theme directory to look in"""
 
     class Header(ctypes.BigEndianStructure):
+        """:meta private:"""
+
         _fields_ = [
             ('version_major', ctypes.c_uint16),
             ('version_minor', ctypes.c_uint16),
@@ -27,7 +43,7 @@ class GtkIconCache:
         return self.data.__hash__()
 
     def __attrs_post_init__(self):
-        self.fh = open(self.theme_dir / "icon-theme.cache", "rb")
+        self.fh = (self.theme_dir / "icon-theme.cache").open("rb")
         self.data = mmap.mmap(self.fh.fileno(), 0, access=mmap.ACCESS_READ)
         # ctypes cant re-use read-only buffers, but this is only 12 bytes
         self.header = self.Header.from_buffer_copy(self.data[0 : ctypes.sizeof(self.Header)])
@@ -79,7 +95,15 @@ class GtkIconCache:
 
         return h
 
-    def lookup(self, icon):
+    def lookup(self, icon: str) -> Iterator[str]:
+        """
+        Lookup a given icon name and return paths where this icon exists
+
+        Args:
+            icon: icon name to look up
+        Returns:
+            sub-directory names where this icon can be found
+        """
         hash = self._icon_hash_name(icon)
 
         bucket_idx = hash % self.num_hash_buckets
@@ -113,3 +137,22 @@ class GtkIconCache:
 
             # Read next pointer
             bucket_offset = self._read_uint32(bucket_offset)
+
+    def _all(self):  # pragma: no cover
+        for bucket_idx in range(0, self.num_hash_buckets):
+            bucket_offset = self._read_uint32(self.header.hash_offset + 4 + (bucket_idx * 4))
+
+            while bucket_offset >= 0 and bucket_offset < len(self.data) - 12:
+                name_offset = self._read_uint32(bucket_offset + 4)
+
+                val = self._read_cstring(name_offset)
+                yield val
+
+                # Found the matching bucket
+                image_list_offset = self._read_uint32(bucket_offset + 8)
+                list_len = self._read_uint32(image_list_offset)
+
+                yield (val, [self._dir_name_from_index(self._read_uint16(image_list_offset + 4 + (8 * i))) for i in range(list_len)])
+
+                # Read next pointer
+                bucket_offset = self._read_uint32(bucket_offset)

@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+
 import toml
 
 # -- General configuration ------------------------------------------------
@@ -10,6 +13,7 @@ import toml
 # ones.
 extensions = [
     'sphinx.ext.ifconfig',
+    'sphinx.ext.napoleon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -37,9 +41,12 @@ author = 'Ash Berlin-Taylor'
 #
 # The short X.Y version.
 
+root = Path(__file__).parents[1]
+sys.path.insert(0, str(root))
 
 try:
-    version = toml.load('pyproject.toml')['tool']['poetry']['version']
+    pyproject = root / 'pyproject.toml'
+    version = toml.load(pyproject)['tool']['poetry']['version']
 except toml.TomlDecodeError:
     version = "0.0.0dev0"
 # The full version, including alpha/beta/rc tags.
@@ -94,7 +101,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'furo'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -196,3 +203,5 @@ man_pages = [
 
 # If true, show URL addresses after external links.
 #man_show_urls = False
+
+autodoc_typehints = 'description'

@@ -1,5 +1,6 @@
 [Icon Theme]
 Directories=16x16/actions ,
+Inherits=hicolor ,Adwaita,
 [16x16/actions]
 Size=16
 Context=Actions
