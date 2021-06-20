@@ -1,5 +1,5 @@
 [Icon Theme]
-Directories=16x16/actions
+Directories=16x16/actions ,
 [16x16/actions]
 Size=16
 Context=Actions

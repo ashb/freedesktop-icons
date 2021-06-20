@@ -16,7 +16,7 @@ build:  ## Build the sdist/wheel packages
 	poetry build
 
 lint:  ## Check code for style
-	pre-commit run
+	pre-commit run --all-files
 	poetry run pytest --dead-fixtures --dup-fixtures
 
 pretty: ## Prettify the code
